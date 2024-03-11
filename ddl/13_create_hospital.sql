@@ -12,6 +12,8 @@
 --Location
 
 -- DROP TABLE IF EXISTS public.hospital;
+CREATE TYPE _Location AS ENUM ('A_wing', 'B_wing', 'C_wing', 'D_wing', 'E_wing');
+CREATE TYPE _DepartmentType AS ENUM ('admissions', 'administration','food_hospitality','diagnostic_imaging','emergency','cardiology', 'neurology', 'oncology', 'pediatrics', 'ICU', 'surgery', 'maternity', 'mental_health', 'billing');
 
 CREATE TABLE IF NOT EXISTS public.hospital
 (

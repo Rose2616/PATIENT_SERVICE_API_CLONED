@@ -14,6 +14,7 @@
 --Email
 
 -- DROP TABLE IF EXISTS public.manager;
+CREATE TYPE _ManagerType AS ENUM ('Supervisor', 'Manager', 'Department_head');
 
 CREATE TABLE IF NOT EXISTS public.manager
 (
