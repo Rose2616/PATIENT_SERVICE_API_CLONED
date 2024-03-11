@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 envn/
 .DS_Store
+.dbsecret.json
