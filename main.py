@@ -2,28 +2,30 @@
 """ This is the entrypoint to the Patient Service API.
 """
 
-__author__ = "Fritz G. Batroni"
-__contact__ = "fritz.g.batroni@gmail.com"
-__copyright__ = "Copyright 2024"
-__deprecated__ = False
-__status__ = "Development"
-__version__ = "0.0.1"
+from typing import List
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, HTTPException
+from sqlalchemy.orm import Session
 
-from lib.db_session_maker import SessionMaker
-from lib.models.patient import Patient
+from lib import crud
+from lib import api_models
+from lib.database_connection import SessionLocal
 
 app = FastAPI()
+
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/patients")
-async def get_patients():
-   db_session = SessionMaker().get_session_maker()
-   with db_session.begin() as session:
-        patients= session.query(Patient)
-
-        return patients
+@app.get("/patients/", response_model=List[api_models.Patient])
+def get_patients(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    patients = crud.get_patients(db, skip=skip, limit=limit)
+    return patients
