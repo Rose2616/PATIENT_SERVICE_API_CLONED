@@ -29,3 +29,5 @@ async def root():
 def get_patients(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     patients = crud.get_patients(db, skip=skip, limit=limit)
     return patients
+
+# dsdsd
